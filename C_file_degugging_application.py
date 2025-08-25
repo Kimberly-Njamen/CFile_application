@@ -1,5 +1,4 @@
 
-# -----------------------------------------------------------
 # Streamlit Web interface app for c file debugging/parsing
 # Author: Kimberly
 # Description:
@@ -12,7 +11,7 @@ import streamlit as st
 import re
 
 
-def instrument_c_code(code: str) -> str:
+def modify_c_code(code: str) -> str:
     lines = code.splitlines(keepends=True)
     modified_code = []
     inside_function = False
@@ -50,12 +49,12 @@ def instrument_c_code(code: str) -> str:
 st.title("C Function Degugging Tool")
 st.write("Upload a `.c` file to add printf debug statements to at the start and end of functions.")
 
-uploaded_file = st.file_uploader("Choose a C file to add debug statements to", type=["c"])
+uploaded_file = st.file_uploader("Choose a C file to add the debug statements to", type=["c"])
 
-if uploaded_file is not None:
+if uploaded_file:
     code = uploaded_file.read().decode("utf-8")
 
-    modified_code = instrument_c_code(code)
+    modified_code = modify_c_code(code)
 
     st.subheader("Modified Code:")
     st.code(modified_code, language="c")
@@ -66,3 +65,4 @@ if uploaded_file is not None:
         file_name=f"modified_{uploaded_file.name}",
         mime="text/x-c"
     )
+
